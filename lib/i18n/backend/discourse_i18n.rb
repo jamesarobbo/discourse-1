@@ -6,6 +6,10 @@ module I18n
       include I18n::Backend::Fallbacks
       include I18n::Backend::Pluralization
 
+      def initialize
+        @overrides_enabled = true
+      end
+
       def available_locales
         # in case you are wondering this is:
         # Dir.glob( File.join(Rails.root, 'config', 'locales', 'client.*.yml') )
@@ -19,6 +23,28 @@ module I18n
         super
       end
 
+      def overrides_for(locale)
+        @overrides ||= {}
+        return @overrides[locale] if @overrides[locale]
+
+        @overrides[locale] = {}
+
+        TranslationOverride.where(locale: locale).pluck(:translation_key, :value).each do |tuple|
+          @overrides[locale][tuple[0]] = tuple[1]
+        end
+
+        @overrides[locale]
+      end
+
+      # In some environments such as migrations we don't want to use overrides.
+      # Use this to disable them over a block of ruby code
+      def overrides_disabled
+        @overrides_enabled = false
+        yield
+      ensure
+        @overrides_enabled = true
+      end
+
       # force explicit loading
       def load_translations(*filenames)
         unless filenames.empty?
@@ -28,6 +54,10 @@ module I18n
 
       def fallbacks(locale)
         [locale, SiteSetting.default_locale.to_sym, :en].uniq.compact
+      end
+
+      def translate(locale, key, options = {})
+        (@overrides_enabled && overrides_for(locale)[key]) || super(locale, key, options)
       end
 
       def exists?(locale, key)

@@ -2,12 +2,12 @@ class AddLoungeCategory < ActiveRecord::Migration
   def up
     return if Rails.env.test?
 
-    I18n.overrides_disabled do
+    I18n.backend.overrides_disabled do
       result = Category.exec_sql "SELECT 1 FROM site_settings where name = 'lounge_category_id'"
       if result.count == 0
-        description = I18n.t('vip_category_description')
+        description = I18n.t('vip_category_description', skip_overrides: true)
 
-        default_name = I18n.t('vip_category_name')
+        default_name = I18n.t('vip_category_name', skip_overrides: true)
         name = if Category.exec_sql("SELECT 1 FROM categories where name = '#{default_name}'").count == 0
           default_name
         else
