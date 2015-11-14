@@ -1,17 +1,18 @@
 class MigrateAutoClosePosts < ActiveRecord::Migration
   def up
+    I18n.backend.overrides_disabled do
+      strings = []
+      %w(days hours lastpost_days lastpost_hours lastpost_minutes).map do |k|
+        strings << I18n.t("topic_statuses.autoclosed_enabled_#{k}.one", skip_overrides: true)
+        strings << I18n.t("topic_statuses.autoclosed_enabled_#{k}.other", skip_overrides: true).sub("%{count}", "\\d+")
+      end
 
-    strings = []
-    %w(days hours lastpost_days lastpost_hours lastpost_minutes).map do |k|
-      strings << "topic_statuses.autoclosed_enabled_#{k}.one"
-      strings << "topic_statuses.autoclosed_enabled_#{k}.other").sub("%{count}", "\\d+"
+      sql = "UPDATE posts SET action_code = 'autoclosed.enabled', post_type = 3 "
+      sql << "WHERE post_type = 2 AND ("
+      sql << strings.map {|s| "raw ~* #{ActiveRecord::Base.connection.quote(s)}" }.join(' OR ')
+      sql << ")"
+
+      execute sql
     end
-
-    sql = "UPDATE posts SET action_code = 'autoclosed.enabled', post_type = 3 "
-    sql << "WHERE post_type = 2 AND ("
-    sql << strings.map {|s| "raw ~* #{ActiveRecord::Base.connection.quote(s)}" }.join(' OR ')
-    sql << ")"
-
-    execute sql
   end
 end
