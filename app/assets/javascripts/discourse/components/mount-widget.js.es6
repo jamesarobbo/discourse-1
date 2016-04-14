@@ -20,6 +20,11 @@ export default Ember.Component.extend({
     const name = this.get('widget');
 
     this._widgetClass = queryRegistry(name) || this.container.lookupFactory(`widget:${name}`);
+
+    if (!this._widgetClass) {
+      console.error(`Error: Could not find widget: ${name}`);
+    }
+
     this._connected = [];
   },
 
@@ -56,6 +61,8 @@ export default Ember.Component.extend({
   rerenderWidget() {
     Ember.run.cancel(this._timeout);
     if (this._rootNode) {
+      if (!this._widgetClass) { return; }
+
       const t0 = new Date().getTime();
 
       const opts = { model: this.get('model') };

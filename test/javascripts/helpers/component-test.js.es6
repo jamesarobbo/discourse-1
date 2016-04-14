@@ -24,9 +24,12 @@ export default function(name, opts) {
 
     if (opts.setup) {
       const store = createStore();
-      this.currentUser = Discourse.User.create();
+
+      if (!opts.anonymous) {
+        this.currentUser = Discourse.User.create();
+        this.container.register('current-user:main', this.currentUser, { instantiate: false });
+      }
       this.container.register('store:main', store, { instantiate: false });
-      this.container.register('current-user:main', this.currentUser, { instantiate: false });
       opts.setup.call(this, store);
     }
 

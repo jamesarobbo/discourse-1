@@ -1,5 +1,5 @@
 import { default as computed, on, observes } from 'ember-addons/ember-computed-decorators';
-import { headerHeight } from 'discourse/views/header';
+import { headerHeight } from 'discourse/components/site-header';
 
 const PANEL_BODY_MARGIN = 30;
 const mutationSupport = !Ember.testing && !!window['MutationObserver'];

@@ -1,6 +1,6 @@
 import { url } from 'discourse/lib/computed';
 import { default as computed, observes } from 'ember-addons/ember-computed-decorators';
-import { headerHeight } from 'discourse/views/header';
+import { headerHeight } from 'discourse/components/site-header';
 
 export default Ember.Component.extend({
   classNames: ['user-menu'],
