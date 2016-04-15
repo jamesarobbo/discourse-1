@@ -1,0 +1,10 @@
+---
+:concurrency: 25
+staging:
+  :concurrency: 2
+demo:
+  :concurrency: 2
+:queues:
+  - default
+  - metrics
+  - default

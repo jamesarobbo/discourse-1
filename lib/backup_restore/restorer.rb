@@ -48,8 +48,8 @@ module BackupRestore
 
       switch_schema!
 
-      migrate_database
-      reconnect_database
+      # migrate_database
+      # reconnect_database
       reload_site_settings
       clear_emoji_cache
 
@@ -256,6 +256,8 @@ module BackupRestore
       log "Migrating the database..."
       Discourse::Application.load_tasks
       ENV["VERSION"] = @current_version.to_s
+      Rake::Task["db:drop"].invoke
+      Rake::Task["db:create"].invoke
       Rake::Task["db:migrate"].invoke
     end
 
