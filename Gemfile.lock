@@ -144,7 +144,6 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.3)
     jwt (1.5.2)
-    kgio (2.10.0)
     librarian (0.1.2)
       highline
       thor (~> 0.15)
@@ -223,6 +222,9 @@ GEM
     openid-redis-store (0.0.2)
       redis
       ruby-openid
+    passenger (5.0.27)
+      rack
+      rake (>= 0.8.1)
     pg (0.18.4)
     progress (3.1.1)
     pry (0.10.3)
@@ -233,7 +235,6 @@ GEM
       pry (>= 0.9.10, < 0.11.0)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
-    puma (3.2.0)
     r2 (0.2.6)
     rack (1.6.4)
     rack-mini-profiler (0.9.9.2)
@@ -272,7 +273,6 @@ GEM
       activesupport (= 4.2.6)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    raindrops (0.15.0)
     rake (10.5.0)
     rake-compiler (0.9.5)
       rake
@@ -396,10 +396,6 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
-    unicorn (5.0.1)
-      kgio (~> 2.6)
-      rack
-      raindrops (~> 0.7)
 
 PLATFORMS
   ruby
@@ -458,10 +454,10 @@ DEPENDENCIES
   omniauth-twitter
   onebox
   openid-redis-store
+  passenger
   pg
   pry-nav
   pry-rails
-  puma
   r2 (~> 0.2.5)
   rack-mini-profiler
   rack-protection
@@ -500,7 +496,6 @@ DEPENDENCIES
   timecop
   uglifier
   unf
-  unicorn
 
 BUNDLED WITH
    1.11.2

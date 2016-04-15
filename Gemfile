@@ -171,9 +171,10 @@ gem 'htmlentities', require: false
 gem 'flamegraph', require: false
 gem 'rack-mini-profiler', require: false
 
-gem 'unicorn', require: false
-gem 'puma', require: false
+# gem 'unicorn', require: false
+# gem 'puma', require: false
 gem 'rbtrace', require: false, platform: :mri
+gem 'passenger'
 
 # required for feed importing and embedding
 #
