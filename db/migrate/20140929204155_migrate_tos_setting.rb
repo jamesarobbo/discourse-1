@@ -4,9 +4,7 @@ class MigrateTosSetting < ActiveRecord::Migration
     if res.present? && res.cmd_tuples > 0
       label = nil
 
-      I18n.overrides_disabled do
-        label = "terms_of_service.signup_form_message"
-      end
+      label = "terms_of_service.signup_form_message"
 
       res = execute("SELECT value FROM site_texts WHERE text_type = 'tos_signup_form_message'")
       if res.present? && res.cmd_tuples == 1
