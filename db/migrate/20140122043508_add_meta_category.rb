@@ -5,8 +5,8 @@ class AddMetaCategory < ActiveRecord::Migration
     I18n.backend.overrides_disabled do
       result = Category.exec_sql "SELECT 1 FROM site_settings where name = 'meta_category_id'"
       if result.count == 0
-        description = I18n.t('meta_category_description')
-        name = I18n.t('meta_category_name')
+        description = 'meta_category_description'
+        name = 'meta_category_name'
 
         if Category.exec_sql("SELECT 1 FROM categories where name ilike :name", name: name).count == 0
           result = Category.exec_sql "INSERT INTO categories

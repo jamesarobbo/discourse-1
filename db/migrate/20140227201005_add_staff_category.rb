@@ -5,8 +5,8 @@ class AddStaffCategory < ActiveRecord::Migration
     I18n.backend.overrides_disabled do
       result = Category.exec_sql "SELECT 1 FROM site_settings where name = 'staff_category_id'"
       if result.count == 0
-        description = I18n.t('staff_category_description')
-        name = I18n.t('staff_category_name')
+        description = 'staff_category_description'
+        name = 'staff_category_name'
 
         if Category.exec_sql("SELECT 1 FROM categories where name ilike :name", name: name).count == 0
 
